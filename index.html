@@ -64,7 +64,7 @@ var DISCORD = (function(){
 
       templateMessage = new TEMPLATE([
         "<div>",
-        "<h2><strong class='username'>{user.name}</strong><span class='info time'>{timestamp}</span>{edit}{jump}</h2>",
+        "<h2><strong class='username'>{user.name} {id} </strong><span class='info time'>{timestamp}</span>{edit}{jump}</h2>",
         "<div class='message'>{contents}{embeds}{attachments}</div>",
         "</div>"
       ].join(""));
@@ -781,6 +781,9 @@ class SAVEFILE{
   getUser(index){
     return this.meta.users[this.meta.userindex[index]] || { "name": "&lt;unknown&gt;" };
   }
+  getUserId(index){
+    return this.meta.userindex[index] || { "name": "&lt;unknown&gt;" };
+  }
 
   getUserById(user){
     return this.meta.users[user] || { "name": user };
@@ -966,6 +969,7 @@ var STATE = (function(){
       var message = messages[key];
 
       return {
+        "id": FILE.getUserId(message.u),
         "user": FILE.getUser(message.u),
         "timestamp": message.t,
         "contents": ("m" in message) ? message.m : null,
